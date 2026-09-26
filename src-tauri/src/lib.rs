@@ -196,7 +196,8 @@ fn set_checklist_count(database: State<'_, Database>, advisor_database: State<'_
 fn search_like(connection: &Connection, needle: &str, limit: i64) -> Result<Vec<SearchResult>, rusqlite::Error> {
     let pattern = format!("%{}%", needle.to_lowercase());
     let mut stmt = connection.prepare("SELECT entity_type,entity_id,name_ru,name_en,details FROM search_index WHERE lower(name_ru) LIKE ?1 OR lower(name_en) LIKE ?1 OR lower(aliases) LIKE ?1 ORDER BY CASE WHEN lower(name_ru) LIKE ?2 THEN 0 ELSE 1 END,name_ru LIMIT ?3")?;
-    stmt.query_map(params![pattern, format!("{}%", needle.to_lowercase()), limit], |row| Ok(SearchResult { entity_type: row.get(0)?, entity_id: row.get(1)?, name_ru: row.get(2)?, name_en: row.get(3)?, details: row.get(4)?, localization_status: "community_ru".into(), source_status: "reference".into() }))?.collect()
+    let results = stmt.query_map(params![pattern, format!("{}%", needle.to_lowercase()), limit], |row| Ok(SearchResult { entity_type: row.get(0)?, entity_id: row.get(1)?, name_ru: row.get(2)?, name_en: row.get(3)?, details: row.get(4)?, localization_status: "community_ru".into(), source_status: "reference".into() }))?.collect();
+    results
 }
 
 fn search_fts(connection: &Connection, needle: &str, limit: i64) -> Result<Vec<SearchResult>, rusqlite::Error> {
@@ -206,7 +207,8 @@ fn search_fts(connection: &Connection, needle: &str, limit: i64) -> Result<Vec<S
     }).collect::<Vec<_>>().join(" ");
     if tokens.is_empty() { return Ok(Vec::new()); }
     let mut stmt = connection.prepare("SELECT entity_type,entity_id,name_ru,name_en,details FROM search_index WHERE search_index MATCH ?1 ORDER BY rank LIMIT ?2")?;
-    stmt.query_map(params![tokens, limit], |row| Ok(SearchResult { entity_type: row.get(0)?, entity_id: row.get(1)?, name_ru: row.get(2)?, name_en: row.get(3)?, details: row.get(4)?, localization_status: "community_ru".into(), source_status: "reference".into() }))?.collect()
+    let results = stmt.query_map(params![tokens, limit], |row| Ok(SearchResult { entity_type: row.get(0)?, entity_id: row.get(1)?, name_ru: row.get(2)?, name_en: row.get(3)?, details: row.get(4)?, localization_status: "community_ru".into(), source_status: "reference".into() }))?.collect();
+    results
 }
 
 #[tauri::command]
