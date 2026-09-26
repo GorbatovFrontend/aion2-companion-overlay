@@ -1,0 +1,72 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "AION 2 Companion Overlay",
+  "version": "0.2.0",
+  "identifier": "app.aion2.companion",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "withGlobalTauri": false,
+    "windows": [
+      {
+        "label": "main",
+        "title": "AION 2 Companion",
+        "width": 1100,
+        "height": 720,
+        "minWidth": 900,
+        "minHeight": 600,
+        "decorations": false,
+        "transparent": true,
+        "shadow": true,
+        "resizable": true,
+        "visible": true,
+        "center": true,
+        "alwaysOnTop": true,
+        "skipTaskbar": false
+      },
+      {
+        "label": "compact",
+        "title": "AION 2 Compact",
+        "url": "index.html?window=compact",
+        "width": 330,
+        "height": 410,
+        "minWidth": 280,
+        "minHeight": 260,
+        "decorations": false,
+        "transparent": true,
+        "shadow": false,
+        "resizable": true,
+        "visible": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true
+      },
+      {
+        "label": "quick-search",
+        "title": "Поиск AION 2",
+        "url": "index.html?window=quick-search",
+        "width": 680,
+        "height": 440,
+        "minWidth": 560,
+        "minHeight": 240,
+        "decorations": false,
+        "transparent": true,
+        "shadow": true,
+        "resizable": false,
+        "visible": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "center": true
+      }
+    ],
+    "security": { "csp": "default-src 'self'; img-src 'self' asset: data:; style-src 'self' 'unsafe-inline'; connect-src ipc: http://ipc.localhost" }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["msi", "nsis"],
+    "windows": { "wix": { "language": "ru-RU" } }
+  }
+}

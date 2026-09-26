@@ -1,0 +1,9 @@
+import { useState } from "react";
+import { useBootstrap } from "../../core/database/hooks";
+
+const tabs = ["Обзор","Экипировка","Прогресс экипировки","Навыки","Сборки","Характеристики","Стигмы","Даэванион","Руны","Аркана","PvE","PvP","Ротации","Советы","Типичные ошибки"];
+export function ClassesPage() {
+  const { data } = useBootstrap(); const [classId,setClassId]=useState(data?.activeCharacter?.classId??"sorcerer"); const [tab,setTab]=useState("Обзор");
+  const definition=data?.classes?.find(value=>value.id===classId); if(!definition)return null;
+  return <div className="page class-page"><div className="page-heading"><div><span className="eyebrow">CLASS KNOWLEDGE LAYER</span><h1>{definition.nameRu}</h1><p>{definition.nameEn} · {definition.roleRu}</p></div><select className="class-select" value={classId} onChange={event=>setClassId(event.target.value)}>{data?.classes?.map(value=><option key={value.id} value={value.id}>{value.nameRu}</option>)}</select></div><div className="class-tabs">{tabs.map(value=><button key={value} className={tab===value?"active":""} onClick={()=>setTab(value)}>{value}</button>)}</div>{tab==="Обзор"?<div className="class-overview"><dl><div><dt>Роль</dt><dd>{definition.roleRu??"Не подтверждено"}</dd></div><div><dt>Оружие</dt><dd>{definition.weaponRu??"Не подтверждено"}</dd></div><div><dt>Тип урона</dt><dd>{definition.damageTypeRu??"Не подтверждено"}</dd></div><div><dt>Механика</dt><dd>{definition.mechanicsRu??"Недостаточно подтверждённых Global данных"}</dd></div></dl><aside><span>Source</span><strong>{definition.source}</strong><span>Region</span><strong>{definition.region}</strong><span>Patch</span><strong>{definition.patch}</strong><span>Confidence</span><strong>{definition.confidence}</strong></aside></div>:<div className="insufficient">Контент вкладки «{tab}» загружается из reference data. Подтверждённых записей для этого класса пока недостаточно.</div>}</div>;
+}
