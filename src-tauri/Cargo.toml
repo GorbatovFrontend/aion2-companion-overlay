@@ -10,10 +10,16 @@ name = "aion2_companion_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-tauri-build = { version = "2", features = [] }
+tauri-build = { version = "=2.6.3", features = [] }
 
 [dependencies]
-tauri = { version = "=2.11.1", features = ["tray-icon"] }
+tauri = { version = "=2.11.5", features = ["tray-icon"] }
+# Keep Tauri's internal crates on the same 2.11 release family. Without these
+# constraints Cargo may combine tauri 2.11 with the incompatible 2.12 runtime.
+tauri-runtime = "=2.11.3"
+tauri-runtime-wry = { version = "=2.11.4", default-features = false }
+tauri-macros = "=2.6.3"
+tauri-utils = "=2.9.3"
 tauri-plugin-global-shortcut = "2"
 tauri-plugin-window-state = "2"
 tauri-plugin-single-instance = "2"
@@ -22,6 +28,3 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 thiserror = "2"
 chrono = { version = "0.4", features = ["serde"] }
-
-[target.'cfg(windows)'.dependencies]
-windows = { version = "0.58", features = ["Win32_Foundation", "Win32_UI_WindowsAndMessaging"] }
