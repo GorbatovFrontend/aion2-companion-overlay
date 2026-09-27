@@ -1,48 +1,71 @@
 # AION 2 Companion Overlay
 
-Windows desktop companion for AION 2 Global: an offline Russian wiki, progression assistant, checklist and compact overlay. The MVP is an external Tauri 2 application. It does not inject code, read game memory, capture packets, modify files, automate input or bypass anti-cheat.
+[![CI](https://github.com/GorbatovFrontend/aion2-companion-overlay/actions/workflows/ci.yml/badge.svg)](https://github.com/GorbatovFrontend/aion2-companion-overlay/actions/workflows/ci.yml)
+[![Версия](https://img.shields.io/github/v/release/GorbatovFrontend/aion2-companion-overlay?include_prereleases&label=версия)](https://github.com/GorbatovFrontend/aion2-companion-overlay/releases/tag/v0.2.0)
+[![Лицензия MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Unofficial community project. Not affiliated with, endorsed by, or sponsored by NCSOFT. AION and related names and marks belong to their respective owners.
+Бесплатное Windows-приложение-компаньон для AION 2: русскоязычная офлайн-база знаний, помощник по развитию персонажа, чек-листы, персональный советник и компактный оверлей поверх игры.
 
-> Data status: the included records are a deliberately small research seed used to exercise the complete product flow. TW/community values are visibly marked and must not be treated as confirmed Global data.
+Приложение работает как отдельная программа на Tauri 2. Оно не внедряет код в игру, не читает память игрового процесса, не перехватывает сетевой трафик, не изменяет файлы клиента, не автоматизирует ввод и не обходит античит.
 
-## Download and install
+> **Статус данных:** встроенная база пока содержит небольшой стартовый набор записей для проверки всех функций приложения. Значения из тайваньской версии и материалов сообщества отмечены отдельно и не должны восприниматься как подтверждённые данные глобальной версии.
 
-Download the latest Windows installer from [GitHub Releases](https://github.com/gorbatovfrontend-cmd/aion2-companion-overlay/releases). For most users, the NSIS `setup.exe` is the simplest option; `.msi` is also published.
+Это неофициальный проект сообщества. Он не связан с NCSOFT, не одобрен и не спонсируется компанией. Названия AION и связанные товарные знаки принадлежат их владельцам.
 
-The preview builds are currently unsigned. Windows SmartScreen may show an unknown publisher warning. Verify that the download comes from this repository's Releases page before choosing **More info → Run anyway**. Node.js, Rust and pnpm are not required to run the installed application.
+## Скачать и установить
 
-## What works
+Актуальная опубликованная версия — **v0.2.0 (предварительный выпуск)**.
 
-- Three native windows: Panel (`Alt+Q`), Compact (`Alt+Shift+Q`) and Quick Search (`Alt+Space`).
-- Always-on-top transparent windows, drag/resize, persisted geometry and compact click-through (`Alt+Shift+L`).
-- Local SQLite database with versioned migrations and FTS5 index.
-- RU/EN search, aliases, command filters such as `> dungeon fire` and client-side fuzzy ranking.
-- Editable character level/GS; roadmap recalculates after saving.
-- Persistent obtained/favorite/enhancement state and daily/weekly counters.
-- Module registry with explicit permissions and per-module enable state.
-- Browser fallback (`pnpm dev`) for UI development without the Rust host.
-- Personal Advisor driven by deterministic local rules, including explicit `STOP` advice and explanations.
-- Multiple character profiles, all eight class registry entries, PvE/Solo PvP build selection and weighted build readiness.
-- Separate `reference.db` and `user.db` stores for updateable content and durable personal progress.
-- Data Sources screen with provider health/version state; remote providers remain disabled or manual-only until their API and reuse terms are confirmed.
+- [Открыть страницу релиза v0.2.0](https://github.com/GorbatovFrontend/aion2-companion-overlay/releases/tag/v0.2.0)
+- [Скачать обычный установщик `.exe`](https://github.com/GorbatovFrontend/aion2-companion-overlay/releases/download/v0.2.0/AION.2.Companion.Overlay_0.2.0_x64-setup.exe)
+- [Скачать установщик `.msi`](https://github.com/GorbatovFrontend/aion2-companion-overlay/releases/download/v0.2.0/AION.2.Companion.Overlay_0.2.0_x64_ru-RU.msi)
 
-## Development
+Для большинства пользователей рекомендуется файл `AION.2.Companion.Overlay_0.2.0_x64-setup.exe`.
 
-Requirements: Windows 10/11, WebView2, Node.js 20+, pnpm 9+, Rust stable 1.77.2+ and the Visual Studio C++ Build Tools.
+1. Скачайте установщик со страницы релиза этого репозитория.
+2. Запустите скачанный файл и пройдите стандартную установку Windows.
+3. Откройте **AION 2 Companion Overlay** через меню «Пуск».
+
+Сборка пока не подписана платным сертификатом, поэтому Windows SmartScreen может показать предупреждение о неизвестном издателе. Убедитесь, что файл скачан именно из репозитория `GorbatovFrontend/aion2-companion-overlay`, затем выберите **«Подробнее» → «Выполнить в любом случае»**. Для установленного приложения не требуются Node.js, Rust или pnpm.
+
+## Возможности
+
+- Три нативных окна: основная панель (`Alt+Q`), компактный режим (`Alt+Shift+Q`) и быстрый поиск (`Alt+Space`).
+- Прозрачные окна поверх игры, перетаскивание и изменение размера, сохранение положения окон.
+- Сквозные клики в компактном режиме по сочетанию `Alt+Shift+L`.
+- Локальная база SQLite с версионируемыми миграциями и полнотекстовым индексом FTS5.
+- Поиск на русском и английском языках, псевдонимы, фильтры команд и нечёткое ранжирование результатов.
+- Редактируемые уровень и показатель экипировки персонажа с автоматическим пересчётом плана развития.
+- Сохраняемые отметки получения, избранного и усиления, а также ежедневные и еженедельные счётчики.
+- Несколько профилей персонажей и справочник всех восьми классов.
+- Выбор PvE- и Solo PvP-сборок с расчётом готовности по весам.
+- Персональный советник на локальных детерминированных правилах, включая предупреждения `STOP` с объяснением причин.
+- Раздельные базы `reference.db` и `user.db`: справочные данные можно обновлять без потери личного прогресса.
+- Экран источников данных с отображением состояния и версии поставщиков.
+- Модульная архитектура с явными разрешениями и возможностью включать или отключать отдельные модули.
+- Режим браузерного предпросмотра интерфейса без запуска Rust-оболочки.
+
+## Системные требования
+
+- Windows 10 или Windows 11, 64-битная версия.
+- Microsoft Edge WebView2 Runtime. На актуальных версиях Windows он обычно уже установлен.
+
+## Разработка
+
+Для разработки нужны Windows 10/11, WebView2, Node.js 20+, pnpm 9+, стабильный Rust 1.77.2+ и Visual Studio C++ Build Tools.
 
 ```powershell
 pnpm install
 pnpm tauri dev
 ```
 
-Frontend-only preview:
+Запуск только интерфейса в браузере:
 
 ```powershell
 pnpm dev
 ```
 
-Tests and production build:
+Тесты и производственная сборка:
 
 ```powershell
 pnpm test
@@ -50,40 +73,44 @@ pnpm build
 pnpm tauri build
 ```
 
-CI verifies frontend and Rust tests on Windows. Pushing a version tag such as `v0.2.0` builds both Windows installers and creates a draft prerelease through `.github/workflows/release.yml`.
+GitHub Actions проверяет фронтенд, Rust-тесты и производственную сборку на Windows. Отправка тега версии вида `v0.2.0` запускает сборку установщиков NSIS и MSI через `.github/workflows/release.yml`.
 
-The Tauri build produces Windows installers under `src-tauri/target/release/bundle/`. A portable binary is the unsigned `src-tauri/target/release/aion2-companion-overlay.exe`; release distribution should add code signing and an updater signature.
+Готовые локальные установщики появляются в `src-tauri/target/release/bundle/`.
 
-Before a signed release, generate platform icon sizes from `assets/app-icon.svg` with `pnpm tauri icon assets/app-icon.svg`, then add the generated icon paths to the bundle configuration.
+## Локальные данные
 
-## Local data
+Устаревшие функции продолжают использовать `companion.db`. Начиная с версии 0.2 советник хранит справочные материалы в `reference.db`, а профили и личный прогресс — в `user.db`. Все базы находятся в каталоге данных приложения Windows. Миграции расположены в `src-tauri/migrations/`.
 
-The legacy feature store remains `companion.db`. Advisor v0.2 adds `reference.db` plus `user.db` in the same OS app-data directory; reference data can be replaced independently while user profiles/checklists remain intact. Migrations live in `src-tauri/migrations/`. The current seed is intentionally small and source-labelled.
+Безопасное обновление данных:
 
-To update data safely:
+1. Добавьте новую нумерованную SQL-миграцию или импортируйте подписанный пакет данных с версией.
+2. Сохраните сведения об источнике, регионе, статусе локализации и дате проверки.
+3. Перестройте `search_index` в той же транзакции.
+4. Перед публикацией запустите тесты Rust и фронтенда.
 
-1. Add a new numbered SQL migration or import a signed/versioned data package.
-2. Preserve source, region, localization status and verification date.
-3. Rebuild `search_index` in the same transaction.
-4. Run Rust and frontend tests before publishing the package.
+## Добавление источника данных
 
-## Add a provider
+Реализуйте контракт `DataProvider`, описанный в [документе об архитектуре](docs/architecture.md), преобразуйте внешние записи в нормализованные DTO импорта и выполняйте сетевые запросы только в процессе обновления. Источник не должен напрямую изменять рабочую базу: сначала данные проверяются во временной базе, после чего выполняется атомарная замена.
 
-Implement the `DataProvider` contract described in [docs/architecture.md](docs/architecture.md), map remote records into normalized import DTOs, and put all network access in the updater process. Providers must never write directly to the live database; validate into a staging database and atomically swap after checks pass.
+## Добавление модуля
 
-## Add a module
+Создайте каталог функции в `src/modules/`, зарегистрируйте манифест в `src/core/modules/registry.ts`, укажите только необходимые разрешения и добавьте маршрут или точку отображения. Модули получают сервисы ядра и не управляют окнами, глобальными сочетаниями клавиш или необработанными подключениями к базе данных.
 
-Add a feature directory under `src/modules/`, register its manifest in `src/core/modules/registry.ts`, declare only the permissions it needs, and add its route/render entry. Modules receive core services; they do not own windows, global shortcuts or raw database connections.
+## Документация
 
-## Documentation
+- [Исследование оверлеев](docs/research-overlays.md)
+- [Архитектура](docs/architecture.md)
+- [Источники данных](docs/data-sources.md)
+- [База данных](docs/database.md)
+- [Поведение оверлея](docs/overlay.md)
+- [Модульная система](docs/modules.md)
+- [Локализация](docs/localization.md)
+- [Безопасность](docs/security.md)
+- [План развития](docs/roadmap.md)
+- [Советник v0.2 и матрица приёмки](docs/advisor-v0.2.md)
 
-- [Overlay research](docs/research-overlays.md)
-- [Architecture](docs/architecture.md)
-- [Data sources](docs/data-sources.md)
-- [Database](docs/database.md)
-- [Overlay behavior](docs/overlay.md)
-- [Module system](docs/modules.md)
-- [Localization](docs/localization.md)
-- [Security](docs/security.md)
-- [Delivery roadmap](docs/roadmap.md)
-- [Advisor v0.2 and acceptance matrix](docs/advisor-v0.2.md)
+## Участие в разработке
+
+Предложения и исправления приветствуются. Перед отправкой изменений ознакомьтесь с [CONTRIBUTING.md](CONTRIBUTING.md). Инструкции по ответственному сообщению об уязвимостях находятся в [SECURITY.md](SECURITY.md).
+
+Проект распространяется бесплатно по лицензии [MIT](LICENSE).
